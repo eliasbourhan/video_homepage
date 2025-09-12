@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Test vidéo/PNG</title>
+  <style>
+    body {margin:0;padding:0;background:transparent;}
+    img, video {width:100%;height:auto;display:block;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <!-- PNG (caché par défaut) -->
+    <img id="png" src="https://raw.githubusercontent.com/eliasbourhan/video_homepage/main/Frank0000-min.png"
+         alt="" style="display:none">
+
+    <!-- Vidéo WebM (cachée par défaut) -->
+    <video id="webm" playsinline autoplay muted loop preload="auto" style="display:none">
+      <source src="https://raw.githubusercontent.com/eliasbourhan/video_homepage/main/Frank0168-min.webm"
+              type='video/webm; codecs="vp9,opus"'>
+    </video>
+  </div>
+
+  <script>
+    (function(){
+      var test = document.createElement('video');
+      var canWebm = !!test.canPlayType && (
+        test.canPlayType('video/webm; codecs="vp9"') ||
+        test.canPlayType('video/webm; codecs="vp8"') ||
+        test.canPlayType('video/webm')
+      );
+
+      var png = document.getElementById('png');
+      var webm = document.getElementById('webm');
+
+      if (canWebm) {
+        webm.style.display = 'block';
+        webm.play().catch(()=>{});
+      } else {
+        png.style.display = 'block';
+      }
+    })();
+  </script>
+</body>
+</html>

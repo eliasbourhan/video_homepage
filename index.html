@@ -4,15 +4,20 @@
   <meta charset="utf-8" />
   <title>Switch WebM / PNG</title>
   <style>
-    html, body {
+    /* Forcer transparence partout */
+    html, body, #wrap {
       margin: 0;
       padding: 0;
-      background: transparent; /* <-- fond totalement transparent */
+      background: transparent !important;
     }
     img, video {
+      display: block;
       width: 100%;
       height: auto;
-      display: block;
+      background: transparent !important;
+    }
+    * {
+      background-color: transparent !important;
     }
   </style>
 </head>

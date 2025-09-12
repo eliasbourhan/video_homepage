@@ -4,8 +4,16 @@
   <meta charset="utf-8" />
   <title>Switch WebM / PNG</title>
   <style>
-    body { margin:0; background:transparent; }
-    img, video { width:100%; height:auto; display:block; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent; /* <-- fond totalement transparent */
+    }
+    img, video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -24,8 +32,6 @@
   </div>
 
   <script>
-    console.log("UA:", navigator.userAgent);
-
     (function () {
       var ua = navigator.userAgent;
 
@@ -40,10 +46,8 @@
       var webm = document.getElementById('webm');
 
       if (isIOSWebKit || isMacSafari) {
-        console.log("Safari détecté → PNG");
         if (png) png.style.display = 'block';
       } else {
-        console.log("Autre navigateur → WebM");
         if (webm) {
           webm.style.display = 'block';
           webm.play().catch(function(){});

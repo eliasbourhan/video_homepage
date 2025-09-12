@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8">
-  <title>Test vidéo/PNG</title>
+  <title>Video switch WebM / PNG</title>
   <style>
     body {margin:0;padding:0;background:transparent;}
     img, video {width:100%;height:auto;display:block;}
@@ -11,8 +11,10 @@
 <body>
   <div id="wrap">
     <!-- PNG (caché par défaut) -->
-    <img id="png" src="https://raw.githubusercontent.com/eliasbourhan/video_homepage/main/Frank0000-min.png"
-         alt="" style="display:none">
+    <img id="png"
+         src="https://raw.githubusercontent.com/eliasbourhan/video_homepage/main/Frank0000-min.png"
+         alt=""
+         style="display:none">
 
     <!-- Vidéo WebM (cachée par défaut) -->
     <video id="webm" playsinline autoplay muted loop preload="auto" style="display:none">
@@ -22,22 +24,24 @@
   </div>
 
   <script>
-    (function(){
-      var test = document.createElement('video');
-      var canWebm = !!test.canPlayType && (
-        test.canPlayType('video/webm; codecs="vp9"') ||
-        test.canPlayType('video/webm; codecs="vp8"') ||
-        test.canPlayType('video/webm')
-      );
+    (function () {
+      var ua = navigator.userAgent;
 
-      var png = document.getElementById('png');
+      // Safari sur Mac OU tous les navigateurs iOS (WebKit obligatoire)
+      var isIOSWebKit = /iPhone|iPad|iPod/i.test(ua);
+      var isMacSafari = /Macintosh/.test(ua) && /Safari/.test(ua) &&
+                        !/(Chrome|CriOS|Edg|OPR|Brave|Firefox)/i.test(ua);
+
+      var png  = document.getElementById('png');
       var webm = document.getElementById('webm');
 
-      if (canWebm) {
+      if (isIOSWebKit || isMacSafari) {
+        // Safari → on force le PNG
+        png.style.display = 'block';
+      } else {
+        // Autres navigateurs → WebM
         webm.style.display = 'block';
         webm.play().catch(()=>{});
-      } else {
-        png.style.display = 'block';
       }
     })();
   </script>

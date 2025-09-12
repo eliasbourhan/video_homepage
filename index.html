@@ -1,28 +1,55 @@
-<script>
-  console.log("UA:", navigator.userAgent);
-</script>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Switch WebM / PNG</title>
+  <style>
+    body { margin:0; background:transparent; }
+    img, video { width:100%; height:auto; display:block; }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <!-- PNG caché par défaut -->
+    <img id="png"
+         src="https://raw.githubusercontent.com/eliasbourhan/video_homepage/main/Frank0000-min.png"
+         alt=""
+         style="display:none" />
 
-<script>
-(function () {
-  var ua = navigator.userAgent;
+    <!-- WebM caché par défaut -->
+    <video id="webm" playsinline autoplay muted loop preload="auto" style="display:none">
+      <source src="https://raw.githubusercontent.com/eliasbourhan/video_homepage/main/Frank0168-min.webm"
+              type='video/webm; codecs="vp9,opus"' />
+    </video>
+  </div>
 
-  // Safari desktop (Mac) → contient "Safari" mais PAS "Chrome", "Chromium", "CriOS", "Edg", "OPR", "Brave"
-  var isMacSafari = /Macintosh/.test(ua) && /Safari\//.test(ua) &&
-                    !/(Chrome|Chromium|CriOS|Edg|OPR|Brave|Firefox)/i.test(ua);
+  <script>
+    console.log("UA:", navigator.userAgent);
 
-  // iOS (tous navigateurs) → obligé d'utiliser WebKit, donc même problème
-  var isIOSWebKit = /(iPhone|iPad|iPod)/i.test(ua);
+    (function () {
+      var ua = navigator.userAgent;
 
-  var png  = document.getElementById('png');
-  var webm = document.getElementById('webm');
+      // Safari desktop (Mac) : contient Safari mais PAS Chrome/Edg/OPR/Brave/Firefox
+      var isMacSafari = /Macintosh/.test(ua) && /Safari\//.test(ua) &&
+                        !/(Chrome|Chromium|CriOS|Edg|OPR|Brave|Firefox)/i.test(ua);
 
-  if (isIOSWebKit || isMacSafari) {
-    console.log("Safari détecté → PNG");
-    png.style.display = 'block';
-  } else {
-    console.log("Autre navigateur → WebM");
-    webm.style.display = 'block';
-    webm.play().catch(()=>{});
-  }
-})();
-</script>
+      // iOS (tous navigateurs = WebKit)
+      var isIOSWebKit = /(iPhone|iPad|iPod)/i.test(ua);
+
+      var png  = document.getElementById('png');
+      var webm = document.getElementById('webm');
+
+      if (isIOSWebKit || isMacSafari) {
+        console.log("Safari détecté → PNG");
+        if (png) png.style.display = 'block';
+      } else {
+        console.log("Autre navigateur → WebM");
+        if (webm) {
+          webm.style.display = 'block';
+          webm.play().catch(function(){});
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
